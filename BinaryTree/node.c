@@ -60,9 +60,9 @@ void PrintTree(Node **Root) {
 		return;
 	}
 	CurrentNodePointer = *Root;
-	PrintTree(&CurrentNodePointer->Right);
-	printf("Node is %d \n", CurrentNodePointer->Value);
 	PrintTree(&CurrentNodePointer->Left);
+	printf("Node is %d \n", CurrentNodePointer->Value);
+	PrintTree(&CurrentNodePointer->Right);
 }
 
 bool SearchTree(Node **Root, unsigned int Value) {
@@ -153,6 +153,28 @@ Node * FindMinimumInTree(Node **Root) {
 	return Min;
 }
 
+Node *FindKMinimumInTree(Node **Root, unsigned int K) {
+	static unsigned int Count = 0;
+	static unsigned int FoundKMin = 0;
+	Node *CurrentNode;
+	static Node *KMin = NULL;
+	if (*Root == NULL) {
+		return NULL;
+	}
+	CurrentNode = *Root;
+	FindKMinimumInTree(&CurrentNode->Left,K);
+	Count++;
+	if (Count == K) {
+		KMin = CurrentNode;
+		FoundKMin = 1;
+		return KMin;
+	}
+	if (FoundKMin == 0) {
+		FindKMinimumInTree(&CurrentNode->Right, K);
+	}
+	return KMin;
+}
+
 Node * FindSecondMinimumInTree(Node **Root) {
 	Node *SecondMin;
 	Node  *Min;
@@ -189,4 +211,27 @@ Node * FindParentInTree(Node **Root, unsigned int Value) {
 		Parent = FindParentInTree(&CurrentNode->Right, Value);
 	}
 	return Parent;
+}
+
+Node * FindLowestCommonAncestor(Node **Root, unsigned int Child1, unsigned int Child2) {
+	Node *CurrentNodePointer;
+	if (*Root == NULL) {
+		return NULL;
+	}
+	if (SearchTree(Root, Child1) == false || SearchTree(Root, Child2) == false) {
+		return NULL;
+	}
+	CurrentNodePointer = *Root;
+	while (CurrentNodePointer) {
+		if (Child1 < CurrentNodePointer->Value && Child2 < CurrentNodePointer->Value) {
+			CurrentNodePointer = CurrentNodePointer->Left;
+		}
+		else if (Child1 > CurrentNodePointer->Value && Child2 > CurrentNodePointer->Value) {
+			CurrentNodePointer = CurrentNodePointer->Right;
+		}
+		else {
+			return CurrentNodePointer;
+		}
+	}
+	return NULL;
 }

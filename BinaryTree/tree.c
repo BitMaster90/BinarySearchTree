@@ -7,9 +7,14 @@ int main(void) {
 	Node *Root;
 	unsigned int temp,i;
 	unsigned int Value;
+	unsigned int K;
+	unsigned int Child1;
+	unsigned int Child2;
 	Node *Min;
 	Node *SecondMin;
+	Node *KMin;
 	Node *Parent;
+	Node *LCA;
 	unsigned int Array[10] = { 6,13,15,16,17,19,23,26,32,90 };
 	Root = NULL;
 	AddToTreeRecursion(&Root, 10);
@@ -43,6 +48,14 @@ int main(void) {
 	else {
 		printf("Second Minimum value in Tree is %d \n", SecondMin->Value);
 	}
+	K = 5;
+	KMin = FindKMinimumInTree(&Root,K);
+	if (KMin == NULL) {
+		printf("Tree is empty \n");
+	}
+	else {
+		printf("%d KMinimum value in Tree is %d \n", K,KMin->Value);
+	}
 	Parent = FindParentInTree(&Root, 8);
 	if (Parent == NULL) {
 		printf("Parent not found \n");
@@ -62,6 +75,16 @@ int main(void) {
 	}
 	else {
 		printf("Value %d not found \n", Value);
+	}
+	Child1 = 5;
+	Child2 = 8;
+	printf("Lowest common ancestor for %d and %d in the tree is :\n", Child1, Child2);
+	LCA = FindLowestCommonAncestor(&Root, Child1, Child2);
+	if (LCA == NULL) {
+		printf("No LCA \n");
+	}
+	else {
+		printf("LCA is %d \n", LCA->Value);
 	}
 }
 

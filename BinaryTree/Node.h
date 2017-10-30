@@ -19,5 +19,7 @@ int DoBinarySearch(unsigned int *, unsigned int, unsigned int, unsigned int);
 Node * FindMinimumInTree(Node **);
 Node * FindSecondMinimumInTree(Node **);
 Node * FindParentInTree(Node **, unsigned int);
+Node * FindKMinimumInTree(Node **, unsigned int);
+Node * FindLowestCommonAncestor(Node **, unsigned int, unsigned int);
 #endif
 

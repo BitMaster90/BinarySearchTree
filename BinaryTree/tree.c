@@ -5,6 +5,7 @@
 
 int main(void) {
 	Node *Root;
+	Node *Root2;
 	unsigned int temp,i;
 	unsigned int Value;
 	unsigned int K;
@@ -16,7 +17,9 @@ int main(void) {
 	Node *Parent;
 	Node *LCA;
 	unsigned int Array[10] = { 6,13,15,16,17,19,23,26,32,90 };
+	unsigned int Array2[14] = {10,6,19,4,9,13,14,16,18,1,5,7,8,2 };
 	Root = NULL;
+	Root2 = NULL;
 	AddToTreeRecursion(&Root, 10);
 	AddToTreeRecursion(&Root, 6);
 	AddToTreeRecursion(&Root, 13);
@@ -86,5 +89,12 @@ int main(void) {
 	else {
 		printf("LCA is %d \n", LCA->Value);
 	}
+	for (i = 0; i < 14; i++) {
+		AddToTreeRecursion(&Root2, Array2[i]);
+	}
+	PrintTree(&Root2);
+	DeleteNodeFromTree(&Root2, 10);
+	printf("After deletion \n\n");
+	PrintTree(&Root2);
 }
 

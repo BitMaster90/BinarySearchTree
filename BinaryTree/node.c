@@ -3,6 +3,76 @@
 #include<stdbool.h>
 #include "Node.h"
 
+bool DeleteNodeFromTree(Node **Root, unsigned int Value) {
+	Node *Parent;
+	Node *CurrentNode;
+	Node *Min;
+	Node *MinParent;
+	if (*Root == NULL) {
+		return false;
+	}
+	if ((*Root)->Value == Value) {
+		CurrentNode = *Root;
+		Parent = *Root;
+	}
+	else {
+		Parent = FindParentInTree(Root, Value);
+		if (Parent == NULL) {
+			return false;
+		}
+		if (Parent->Value < Value) {
+			CurrentNode = Parent->Right;
+		}
+		else {
+			CurrentNode = Parent->Left;
+		}
+	}
+	if (CurrentNode->Left == NULL && CurrentNode->Right == NULL) {
+		if (Parent->Left == CurrentNode) {
+			Parent->Left = NULL;
+		}
+		else if (Parent->Right == CurrentNode) {
+			Parent->Right = NULL;
+		}
+		else {
+			*Root = NULL;
+		}
+		free(CurrentNode);
+	}
+	else if (CurrentNode->Left == NULL) {
+		if (Parent->Left == CurrentNode) {
+			Parent->Left = CurrentNode->Right;
+		}
+		else if (Parent->Right == CurrentNode) {
+			Parent->Right = CurrentNode->Right;
+		}
+		else {
+			*Root = CurrentNode->Right;
+		}
+		free(CurrentNode);
+	}
+	else if (CurrentNode->Right == NULL) {
+		if (Parent->Left == CurrentNode) {
+			Parent->Left = CurrentNode->Left;
+		}
+		else if (Parent->Right == CurrentNode) {
+			Parent->Right = CurrentNode->Left;
+		}
+		else {
+			*Root = CurrentNode->Left;
+		}
+		free(CurrentNode);
+	}
+	else {
+		Min = FindMinimumInTree(&CurrentNode->Right);
+		MinParent = FindParentInTree(Root, Min->Value);
+		CurrentNode->Value = Min->Value;
+		DeleteNodeFromTree(&MinParent, Min->Value);
+	}
+}
+
+
+
 bool AddToTree(Node **Root, unsigned int Value) {
 	Node *CurrentNodePointer;
 	Node *PreviousNodePointer;

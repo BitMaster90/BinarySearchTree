@@ -21,5 +21,6 @@ Node * FindSecondMinimumInTree(Node **);
 Node * FindParentInTree(Node **, unsigned int);
 Node * FindKMinimumInTree(Node **, unsigned int);
 Node * FindLowestCommonAncestor(Node **, unsigned int, unsigned int);
+bool DeleteNodeFromTree(Node **, unsigned int);
 #endif
 
